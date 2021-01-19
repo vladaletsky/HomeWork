@@ -24,5 +24,10 @@ public class JdbcServiceImpl implements JdbcService {
         return jdbcRepository.getUser(id);
     }
 
+    @Override
+    public User updateUser(int id, String lastName, int age) {
+        return jdbcRepository.updateUser(id, lastName, age);
+    }
+
 
 }

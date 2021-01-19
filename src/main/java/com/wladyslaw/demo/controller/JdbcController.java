@@ -3,25 +3,30 @@ package com.wladyslaw.demo.controller;
 import com.wladyslaw.demo.model.User;
 import com.wladyslaw.demo.service.JdbcService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping ("/jdbc/users/")
+@RequestMapping("/jdbc/users/")
 @RequiredArgsConstructor
 public class JdbcController {
     private final JdbcService jdbcService;
 
     @GetMapping
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return jdbcService.getUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable int id){
-        return jdbcService.getUser(id); }
+    public User getUser(@PathVariable int id) {
+        return jdbcService.getUser(id);
+    }
+
+    @PostMapping("/{id}")
+    public User updateUser(@PathVariable int id, @RequestParam("lastName") String lastName, @RequestParam("age") int age) {
+        return jdbcService.updateUser(id, lastName, age);
+    }
+
+
 }

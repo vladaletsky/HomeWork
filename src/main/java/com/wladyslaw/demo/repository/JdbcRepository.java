@@ -52,8 +52,24 @@ public class JdbcRepository {
                 user.setFirstName(resultSet2.getString(2));
                 user.setLastName(resultSet2.getString(3));
                 user.setAge(resultSet2.getInt(4));
-
             }
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+
+        }
+        return user;
+    }
+
+    public User updateUser(int id, String lastName, int age) {
+        User user = null;
+        try {
+            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("UPDATE user SET last_name = ?, age = ? WHERE id = ?");
+            preparedStatement.setString(1, lastName);
+            preparedStatement.setInt(2, age);
+            preparedStatement.setInt(3, id);
+            int resultSet3 = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             log.error(e.getMessage());
         }
