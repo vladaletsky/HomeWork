@@ -16,7 +16,7 @@ public class JdbcServiceImpl implements JdbcService {
 
     @Override
     public List<User> getUsers() {
-       return jdbcRepository.getUsers();
+        return jdbcRepository.getUsers();
     }
 
     @Override
@@ -26,7 +26,21 @@ public class JdbcServiceImpl implements JdbcService {
 
     @Override
     public User updateUser(int id, String lastName, int age) {
-        return jdbcRepository.updateUser(id, lastName, age);
+        jdbcRepository.updateUser(id, lastName, age);
+        return jdbcRepository.getUser(id);
+    }
+
+    @Override
+    public User userRole(int id) {
+        return jdbcRepository.userRole(id);
+    }
+
+    public User getFullUserInfo(int id) {
+        return jdbcRepository.getFullUserInfo(id);
+    }
+
+    public User getFullUserInfoV1(int id) {
+        return jdbcRepository.getFullUserInfoV1(id);
     }
 
 

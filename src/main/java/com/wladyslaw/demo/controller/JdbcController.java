@@ -28,5 +28,19 @@ public class JdbcController {
         return jdbcService.updateUser(id, lastName, age);
     }
 
+    @GetMapping("/{id}/role")
+    public User userRole(@PathVariable int id) {
+        return jdbcService.userRole(id);
+    }
+
+    @GetMapping("/{id}/full")
+    public User getFullUserInfo(@PathVariable int id) {
+        return jdbcService.getFullUserInfo(id);
+    }
+
+    @GetMapping("/{id}/fullV1")
+    public User getFullUserInfoV1(@PathVariable int id) {
+        return jdbcService.getFullUserInfoV1(id);
+    }
 
 }
