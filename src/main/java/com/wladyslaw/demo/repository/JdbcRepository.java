@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Repository
@@ -157,25 +159,40 @@ public class JdbcRepository {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("SELECT u.id as id, u.first_name as firstName, " +
                             "u.last_name as lastName, u.age as age, r.id as roleId, r.name as roleName, " +
-                            "a.id as address_id, a.city as city, a.street as street FROM user u " +
+                            "a.id as addressId, a.city as city, a.street as street FROM user u " +
                             "LEFT JOIN role r on r.id = u.role_id LEFT JOIN address a on u.id = a.user_id " +
                             "WHERE u.id = ?;");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            Map<Integer, User> map = new HashMap<>();
+
             while (resultSet.next()) {
                 Address adr = new Address();
-                user.setId(resultSet.getInt("id"));
-                user.setFirstName(resultSet.getString("firstName"));
-                user.setLastName(resultSet.getString("lastName"));
-                user.setAge(resultSet.getInt("age"));
-                user.setRole(new Role(resultSet.getInt("roleId"),
-                        resultSet.getString("roleName")));
-                adr.setId(resultSet.getInt("address_id"));
-                adr.setCity(resultSet.getString("city"));
-                adr.setStreet(resultSet.getString("street"));
-                address.add(adr);
-                user.setAddress(getAddress(id));
+
+                if (!map.containsKey(id)) {
+                    user.setId(resultSet.getInt("id"));
+                    user.setFirstName(resultSet.getString("firstName"));
+                    user.setLastName(resultSet.getString("lastName"));
+                    user.setAge(resultSet.getInt("age"));
+                    user.setRole(new Role(resultSet.getInt("roleId"),
+                            resultSet.getString("roleName")));
+
+                    adr.setId(resultSet.getInt("addressId"));
+                    adr.setCity(resultSet.getString("city"));
+                    adr.setStreet(resultSet.getString("street"));
+                    address.add(adr);
+                    user.setAddress(getAddress(id));
+                    map.put(1, user);
+                } else {
+                    adr.setId(resultSet.getInt("addressId"));
+                    adr.setCity(resultSet.getString("city"));
+                    adr.setStreet(resultSet.getString("street"));
+                    address.add(adr);
+                }
+            }
+            for (Map.Entry<Integer, User> entry : map.entrySet()) {
+                user = entry.getValue();
             }
         } catch (SQLException e) {
             log.error(e.getMessage());
