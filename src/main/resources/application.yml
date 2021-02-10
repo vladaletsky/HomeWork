@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo
+    username: root
+    password: 12131415
+
+  jpa:
+    hibernate:
+      ddl-auto: update # при запуске. Стратегия.
+    show-sql: true # видимость в логе, какой запрос. Для обучения
+    properties:
+      hiberante:
+        format_sql: true

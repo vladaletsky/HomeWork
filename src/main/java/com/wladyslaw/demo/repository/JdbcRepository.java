@@ -182,14 +182,14 @@ public class JdbcRepository {
                     adr.setCity(resultSet.getString("city"));
                     adr.setStreet(resultSet.getString("street"));
                     address.add(adr);
-                    user.setAddress(getAddress(id));
-                    map.put(1, user);
+                    map.put(user.getId(), user);
                 } else {
                     adr.setId(resultSet.getInt("addressId"));
                     adr.setCity(resultSet.getString("city"));
                     adr.setStreet(resultSet.getString("street"));
                     address.add(adr);
                 }
+                user.setAddress(address);
             }
             for (Map.Entry<Integer, User> entry : map.entrySet()) {
                 user = entry.getValue();
