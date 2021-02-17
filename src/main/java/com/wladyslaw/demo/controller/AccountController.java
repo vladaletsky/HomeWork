@@ -3,10 +3,8 @@ package com.wladyslaw.demo.controller;
 import com.wladyslaw.demo.model.Account;
 import com.wladyslaw.demo.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -23,5 +21,20 @@ public class AccountController {
     @GetMapping ("/{id}")
     public Account getAccount(@PathVariable int id){
         return accountService.getAccount(id);
+    }
+
+    @PostMapping ("/{id}")
+    public Account updateAccount(@PathVariable int id){
+        return accountService.getAccount(id);
+    }
+
+    @GetMapping ("/role/{role}")
+    private List<Account> findAccountByAccountRole(@PathVariable String role){
+        return accountService.findAccountByAccountRole(role);
+    }
+
+    @GetMapping ("/address/{city}")
+    private List<Account> findByAddress(@PathVariable String city){
+        return accountService.findByAddress(city);
     }
 }

@@ -23,4 +23,16 @@ public class AccountServiceImpl implements AccountService {
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
+
+    @Override
+    public List<Account> findAccountByAccountRole(String role) {
+        return accountRepository.findAccountsByAccountRole_RoleName(role);
+    }
+
+    @Override
+    public List<Account> findByAddress(String city) {
+        return accountRepository.findAccountByAccountAddress_City(city);
+    }
+
+
 }
